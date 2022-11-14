@@ -52,20 +52,26 @@ function makeRandomWalls() {
 }
 
 function makeSliders() {
+    createElement('h2', 'resolution');
     lineCountInput = createSlider(0,1000,300);
     lineCountInput.input(changeLineCount);
 
-    fovSlider = createSlider(0,360,60);
+    createElement('h2', 'fov');
+    fovSlider = createSlider(0,360,60,0);
     fovSlider.input(changeFov);
 
-    sizeSlider = createSlider(1,50,10);
+    createElement('h2', 'size');
+    sizeSlider = createSlider(1,50,10,0);
     sizeSlider.input(changeSize);
 
-    renderDistanceSlider = createSlider(10,500,400);
+    createElement('h2', 'render distance');
+    renderDistanceSlider = createSlider(10,500,400,0);
 
-    velSlider = createSlider(0.1, 3, 1);
+    createElement('h2', 'velocity');
+    velSlider = createSlider(0.1, 3, 1, 0);
 
-    angularVelSlider = createSlider(0.1,3,1);
+    createElement('h2', 'angular velocity');
+    angularVelSlider = createSlider(0.1,3,1,0);
 }
 
 function draw() {
