@@ -2,7 +2,7 @@ class Player {
     constructor (pos) {
         this.pos = pos;
         this.rays = [];
-        for (let a = 0; a < 360; a+= 10) {
+        for (let a = 0; a < 360; a+= 1) {
             this.rays.push(new Ray(this.pos, radians(a)));
         }
         this.radius = 10;
@@ -31,6 +31,7 @@ class Player {
                 }
             }
             if (minPt) {
+                stroke(255, 50);
                 line(this.pos.x, this.pos.y, minPt.x, minPt.y);
             }
         }
