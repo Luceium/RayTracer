@@ -20,6 +20,14 @@ function setup(){
     // walls.push(new Boundary(createVector(width, height), createVector(width, 0)));
     // walls.push(new Boundary(createVector(width,0), createVector(0,0)));
 
+    //make random walls
+    for (let i = 0; i < 5; i++){
+        let a = createVector(random(width), random(height));
+        let b = createVector(random(width), random(height));
+        let wall = new Boundary(a, b);
+        walls.push(wall);
+    }
+
     walls.push(new Boundary(createVector(20, 20), createVector(200, 200)));
 }
 
