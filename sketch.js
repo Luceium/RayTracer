@@ -27,6 +27,10 @@ function setup() {
     colorMode(HSL);
     makeSliders();
     
+    reset();
+}
+
+function reset(){
     walls = [];
     makeRandomWalls(walls, wallsSlider.value());
     makeBorders(walls);
