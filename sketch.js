@@ -125,5 +125,5 @@ function changeFov(){
 }
 
 function changeSize(){
-
+    player.updateSize(sizeSlider.value());
 }

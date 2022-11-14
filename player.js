@@ -34,6 +34,10 @@ class Player {
         this.remakeRays();
     }
 
+    updateSize(size) {
+        this.radius = size;
+    }
+
     rotate(angle) {
         this.heading += angle;
         // this.heading %= 360;
@@ -61,7 +65,9 @@ class Player {
                 if (!pt){
                     continue;
                 }
-                const d = pt.dist(this.pos);
+                let d = pt.dist(this.pos);
+                const a = ray.dir.heading() - radians(this.heading);
+                d *= cos(a);
                 if (d < min) {
                     min = d;
                     minPt = pt;
@@ -73,7 +79,7 @@ class Player {
                 stroke(255, 0.2);
                 line(this.pos.x, this.pos.y, minPt.x, minPt.y);
             }
-            scene.distances.push(min);
+            scene.distances.push(min - this.radius);
             scene.colors.push(col);
         }
 
