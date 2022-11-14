@@ -10,7 +10,7 @@
 */
 
 let width = window.innerWidth / 2, height = window.innerHeight / 2;
-let lineCountInput, fovSlider, sizeSlider, renderDistanceSlider, angularVelSlider;
+let lineCountInput, fovSlider, sizeSlider, renderDistanceSlider, angularVelSlider, darkens2DCheckbox, wallsSlider;
 let sat = 80, lit = 80;
 let walls;
 let pos;
@@ -25,25 +25,28 @@ let player;
 function setup() {
     createCanvas(width * 2,height);
     colorMode(HSL);
-    
-    makeRandomWalls();
     makeSliders();
+    
+    walls = [];
+    makeRandomWalls(walls, wallsSlider.value());
+    makeBorders(walls);
     
     player = new Player(createVector(width/2,height/2), 40, 300, 10);
 }
 
-function makeRandomWalls() {
-    walls = [];
+function makeRandomWalls(walls, numToCreate) {
     //make random walls
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < numToCreate; i++){
         let a = createVector(random(width), random(height));
         let b = createVector(random(width), random(height));
         let hue = random(255);
         let c = color(hue, sat, lit);
         let wall = new Boundary(a, b, c);
         walls.push(wall);
-    }
+    }   
+}
 
+function makeBorders(walls){
     //create Boundary walls
     walls.push(new Boundary(createVector(0, 0), createVector(0, height), color(0,0,0)));
     walls.push(new Boundary(createVector(0, height), createVector(width, height), color(0,0,0)));
@@ -72,6 +75,13 @@ function makeSliders() {
 
     createElement('h2', 'angular velocity');
     angularVelSlider = createSlider(0.1,3,1,0);
+
+    createElement('h2', 'darken 2d');
+    darkens2DCheckbox = createCheckbox('2d-darkness', false);
+
+    createElement('h2', 'number of walls');
+    createElement('p', 'note, you need to reset the scene to see new walls');
+    wallsSlider = createSlider(1, 10, 5);
 }
 
 function draw() {
@@ -79,12 +89,12 @@ function draw() {
     background(0);
 
     controls();
+    const scene = player.show(walls, darkens2DCheckbox.checked());
+    visualizeScene(scene);
 
     for (let wall of walls){
-        wall.show();
+        wall.show(darkens2DCheckbox.checked(), renderDistanceSlider.value());
     }
-    const scene = player.show(walls);
-    visualizeScene(scene);
 }
 
 function visualizeScene(scene) {

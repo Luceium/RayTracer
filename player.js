@@ -8,7 +8,6 @@ class Player {
         this.fov = fov;
         this.detail = detail;
         this.remakeRays();
-        console.log(this.rays.length);
     }
 
     remakeRays(){
@@ -51,14 +50,18 @@ class Player {
         this.pos.add(vel);
     }
 
-    show(walls) {
+    show(walls, darkens2D) {
         fill(255);
         circle(this.pos.x, this.pos.y, this.radius);
 
         let scene = {distances: [], colors: []};
+        for (let wall of walls) {
+            wall.brightness = darkens2D ? 0 : 1;
+            wall.hits = 0;
+        }
         for (let ray of this.rays){
             let minPt = null;
-            let col = color(0,0,0);
+            let mWall = null;
             let min = Infinity;
             for (let wall of walls){
                 let pt = ray.cast(wall);
@@ -69,16 +72,23 @@ class Player {
                 if (d < min) {
                     min = d;
                     minPt = pt;
-                    col = wall.color;
+                    mWall = wall;
                 }
             }
-            if (minPt) {
+            if (mWall) {
                 strokeWeight(1);
                 stroke(255, 0.2);
                 line(this.pos.x, this.pos.y, minPt.x, minPt.y);
+                mWall.brightness += darkens2D? min : 0;
+                mWall.hits++;
             }
             scene.distances.push(min - this.radius);
-            scene.colors.push(col);
+            scene.colors.push(mWall ? mWall.color : color(0,0,0));
+        }
+        if (darkens2D) {
+            for (let wall of walls) {
+                wall.brightness = wall.hits == 0 ? 0 : wall.brightness / wall.hits;
+            }
         }
 
         return scene;
