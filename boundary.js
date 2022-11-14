@@ -1,11 +1,14 @@
 class Boundary {
-    constructor(a, b){
+    constructor(a, b, color){
         this.a = a;
         this.b = b;
+        this.color = color;
     }
 
     show() {
-        stroke(255);
+        strokeWeight(3);
+        this.color.setAlpha(1);
+        stroke(this.color);
         line(this.a.x, this.a.y, this.b.x, this.b.y);
     }
 }
