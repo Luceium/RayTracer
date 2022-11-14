@@ -66,8 +66,6 @@ class Player {
                     continue;
                 }
                 let d = pt.dist(this.pos);
-                const a = ray.dir.heading() - radians(this.heading);
-                d *= cos(a);
                 if (d < min) {
                     min = d;
                     minPt = pt;
