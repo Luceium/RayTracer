@@ -68,7 +68,7 @@ function makeSliders() {
     fovSlider.input(changeFov);
 
     createElement('h2', 'size');
-    sizeSlider = createSlider(1,50,10,0);
+    sizeSlider = createSlider(5,50,10,0);
     sizeSlider.input(changeSize);
 
     createElement('h2', 'render distance');
@@ -129,7 +129,7 @@ function controls(){
     if (keyIsDown(UP_ARROW) || keyIsDown(87)){
         player.move(velSlider.value());
         for (let wall of walls) {
-            if (collideLineCircle(wall.a.x, wall.a.y, wall.b.x, wall.b.y, player.pos.x, player.pos.y, player.radius)){
+            if (collideLineCircleVector(wall.a, wall.b, player.pos, player.radius)){
                 player.move(-velSlider.value());
                 break;
             }
@@ -138,7 +138,7 @@ function controls(){
     if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){
         player.move(-velSlider.value());
         for (let wall of walls){
-            if (collideLineCircle(wall.a.x, wall.a.y, wall.b.x, wall.b.y, player.pos.x, player.pos.y, player.radius)){
+            if (collideLineCircleVector(wall.a, wall.b, player.pos, player.radius)){
                 player.move(velSlider.value());
                 break;
             }
