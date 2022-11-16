@@ -60,32 +60,32 @@ function makeBorders(walls){
 
 function makeSliders() {
     createElement('h2', 'resolution');
-    lineCountInput = createSlider(0,1000,300);
+    lineCountInput = createSlider(0,500,50);
     lineCountInput.input(changeLineCount);
 
     createElement('h2', 'fov');
-    fovSlider = createSlider(0,360,60,0);
+    fovSlider = createSlider(0,360,90,1);
     fovSlider.input(changeFov);
 
     createElement('h2', 'size');
-    sizeSlider = createSlider(5,50,10,0);
+    sizeSlider = createSlider(10,100,10,10);
     sizeSlider.input(changeSize);
 
     createElement('h2', 'render distance');
-    renderDistanceSlider = createSlider(10,500,400,0);
+    renderDistanceSlider = createSlider(50,500,300,0);
 
     createElement('h2', 'velocity');
-    velSlider = createSlider(0.1, 3, 1, 0);
+    velSlider = createSlider(0.1, 3, 1.5, 0);
 
     createElement('h2', 'angular velocity');
-    angularVelSlider = createSlider(0.1,3,1,0);
+    angularVelSlider = createSlider(0.1,3,1.5,0);
 
     createElement('h2', 'darken 2d');
-    darkens2DCheckbox = createCheckbox('2d-darkness', false);
+    darkens2DCheckbox = createCheckbox('2d-darkness', true);
 
     createElement('h2', 'number of walls');
-    createElement('p', 'note, you need to reset the scene to see new walls');
     wallsSlider = createSlider(1, 10, 5);
+    wallsSlider.input(resetup);
 }
 
 function draw() {
