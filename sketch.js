@@ -27,15 +27,15 @@ function setup() {
     colorMode(HSL);
     makeSliders();
     
-    reset();
+    resetup();
 }
 
-function reset(){
+function resetup(){
     walls = [];
     makeRandomWalls(walls, wallsSlider.value());
     makeBorders(walls);
     
-    player = new Player(createVector(width/2,height/2), 40, 300, 10);
+    player = new Player(createVector(width/2,height/2), fovSlider.value(), lineCountInput.value(), sizeSlider.value());
 }
 
 function makeRandomWalls(walls, numToCreate) {
@@ -128,13 +128,23 @@ function controls(){
     }
     if (keyIsDown(UP_ARROW) || keyIsDown(87)){
         player.move(velSlider.value());
+        for (let wall of walls) {
+            if (collideLineCircle(wall.a.x, wall.a.y, wall.b.x, wall.b.y, player.pos.x, player.pos.y, player.radius)){
+                player.move(-velSlider.value());
+                break;
+            }
+        }
     }
     if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){
         player.move(-velSlider.value());
+        for (let wall of walls){
+            if (collideLineCircle(wall.a.x, wall.a.y, wall.b.x, wall.b.y, player.pos.x, player.pos.y, player.radius)){
+                player.move(velSlider.value());
+                break;
+            }
+        }
     }
 }
-
-//lineCountInput, fovSlider, sizeSlider, renderDistanceSlider, renderDistance=400, angularVelSlider, angularVel=1;
 
 function changeLineCount(){
     player.updateDetails(lineCountInput.value());
